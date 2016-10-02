@@ -1,0 +1,12 @@
+ir-keytable for Android
+=======================
+
+This version of the v4l-utils ir-keytable program which has been adapted to be
+compatible with android's bionic C library.
+The main difference between the original source and this version is the use of
+POSIX standard argument parsing instead of the non-portable argp helpers
+
+Original sources can be found at http://git.linuxtv.org/v4l-utils.git.
+
+
+
