@@ -83,11 +83,6 @@ static const char doc[] = {
 
 };
 
-static const char args_doc[] = {
-    "--device [/dev/input/event* device]\n"
-    "--sysdev [ir class (f. ex. rc0)]\n"
-    "[for using the rc0 sysdev]"};
-
 struct input_keymap_entry_v2 {
 #define KEYMAP_BY_INDEX (1 << 0)
     u_int8_t  flags;
@@ -236,7 +231,6 @@ static int parse_code(char *string)
 const char *argp_program_version = "IR keytable control version " V4L_UTILS_VERSION;
 const char *argp_program_bug_address = "Mauro Carvalho Chehab <m.chehab@samsung.com>";
 
-static int print_version = 0;
 static const struct option long_options[] = {
     {"verbose", no_argument, 0, 'v'},
     {"clear",   no_argument, 0, 'c'},
@@ -480,10 +474,8 @@ static int parse_opt(int argc, char* argv[])
     long key;
     int rc;
     int c;
-    int digit_optind = 0;
 
     while (1) {
-        int this_option_optind = optind ? optind : 1;
         int option_index = 0;
         c = getopt_long(argc, argv, "vtcD:P:Ad:s:rw:a:k:p:d:f:V",long_options, &option_index);
             if (c == -1)
@@ -1294,7 +1286,7 @@ static void test_event(int fd)
             return;
         }
 
-        for (i = 0; i < rd / sizeof(struct input_event); i++) {
+        for (i = 0; i < rd / (int) sizeof(struct input_event); i++) {
             printf(_("%ld.%06ld: event type %s(0x%02x)"),
                 ev[i].time.tv_sec, ev[i].time.tv_usec,
                 get_event_name(events_type, ev[i].type), ev[i].type);
